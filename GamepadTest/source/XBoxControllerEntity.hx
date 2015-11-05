@@ -6,12 +6,17 @@ import flixel.util.FlxPoint;
 import flixel.text.FlxText;
 import Globals;
 
+import IBeatCapable;
+
 /**
  * ...
  * @author DustMan
  */
-class XBoxControllerEntity extends ControllableEntity
+ 
+class XBoxControllerEntity extends ControllableEntity implements IBeatCapable
 {
+	public var beatState:IBeatState = OUT_WINDOW;
+	private var _beatLock:Bool = false;
 	
 	public var spriteGroup(default, null):FlxGroup;
 
@@ -92,6 +97,9 @@ class XBoxControllerEntity extends ControllableEntity
 		
 		_startButton.alpha = ALPHA_OFF;
 		_backButton.alpha = ALPHA_OFF;
+		
+		beatState = OUT_WINDOW;
+		_beatLock = false;
 	}
 	
 	private function createSprite(X:Float, Y:Float, Graphic:String, Alpha:Float = -1):FlxSprite
@@ -108,14 +116,52 @@ class XBoxControllerEntity extends ControllableEntity
 		return button;
 	}
 	
+	public function onEnterBeatAcceptanceWindow():Void
+	{
+		beatState = IN_WINDOW;
+		_missText.visible = false;
+	}
+	
+	public function onExitBeatAcceptanceWindow():Void
+	{
+		beatState = OUT_WINDOW;
+		_hitText.visible = false;
+	}
+	
+	public function onBeat():Void
+	{
+		_controllerBg.y = 5.0;
+	}
+	
+	public function offBeat():Void
+	{
+		_controllerBg.y = 0.0;
+	}
+	
 	override public function onPressA():Void
 	{
 		_aButton.alpha = ALPHA_ON;
 	}
 	
+	override public function onJustPressedA():Void
+	{
+		if (beatState == IN_WINDOW) {
+			_hitText.visible = true;
+			_missText.visible = false;
+		} else {
+			_hitText.visible = false;
+			_missText.visible = true;
+		}
+	}
+	
 	override public function onReleaseA():Void
 	{
 		_aButton.alpha = ALPHA_OFF;
+	}
+	
+	override public function onJustReleasedA():Void
+	{
+		
 	}
 	
 	override public function onPressB():Void

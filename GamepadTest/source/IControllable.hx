@@ -8,6 +8,7 @@ interface IControllable
 	public var isActivelyControllable:Bool;
 	
 	public function onPressA():Void;
+	public function onJustPressedA():Void;
 	public function onPressB():Void;
 	public function onPressX():Void;
 	public function onPressY():Void;
@@ -22,6 +23,7 @@ interface IControllable
 	public function onDpad(dpadLeft:Bool, dpadRight:Bool, dpadUp:Bool, dpadDown:Bool):Void;
 	
 	public function onReleaseA():Void;
+	public function onJustReleasedA():Void;
 	public function onReleaseB():Void;
 	public function onReleaseX():Void;
 	public function onReleaseY():Void;

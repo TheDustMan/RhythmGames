@@ -18,6 +18,11 @@ class ControllableEntity implements IControllable
 		
 	}
 	
+	public function onJustPressedA():Void
+	{
+		
+	}
+	
 	public function onPressB():Void
 	{
 		
@@ -83,6 +88,11 @@ class ControllableEntity implements IControllable
 
 	}
 
+	public function onJustReleasedA():Void
+	{
+		
+	}
+	
 	public function onReleaseB():Void
 	{
 
