@@ -1,2 +1,2 @@
-# FlixelTennis
-Experimental tennis game using HaxeFlixel
+# Rhythm Games
+Experimental collection of rhythm games made using HaxeFlixel
