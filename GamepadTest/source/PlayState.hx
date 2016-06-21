@@ -81,8 +81,12 @@ class PlayState extends FlxState
 		
 		_inputHandler.functionUpdateWithInput();
 		_musicHandler.update();
-		if (FlxG.mouse.justPressed && FlxNapeSpace.space.gravity.y == 0)
-			FlxNapeSpace.space.gravity.setxy(0, 500);
+		if (FlxG.mouse.justPressed) {
+			_musicHandler.cycleSong();
+			if (FlxNapeSpace.space.gravity.y == 0) {
+				FlxNapeSpace.space.gravity.setxy(0, 500);
+			}
+		}
 		/*
 		var justReleasedID:Int = _gamePad.firstJustReleasedButtonID();
 		var justPressedID:Int =  _gamePad.firstJustPressedButtonID();

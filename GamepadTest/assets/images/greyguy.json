@@ -1,0 +1,116 @@
+{"frames": [
+
+{
+	"filename": "greyguy_bob_000.png",
+	"frame": {"x":2,"y":2,"w":139,"h":258},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":139,"h":258},
+	"sourceSize": {"w":139,"h":258}
+},
+{
+	"filename": "greyguy_bob_001.png",
+	"frame": {"x":143,"y":2,"w":139,"h":258},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":139,"h":258},
+	"sourceSize": {"w":139,"h":258}
+},
+{
+	"filename": "greyguy_bob_002.png",
+	"frame": {"x":284,"y":2,"w":139,"h":258},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":139,"h":258},
+	"sourceSize": {"w":139,"h":258}
+},
+{
+	"filename": "greyguy_crouch_000.png",
+	"frame": {"x":425,"y":2,"w":192,"h":276},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":192,"h":276},
+	"sourceSize": {"w":192,"h":276}
+},
+{
+	"filename": "greyguy_crouch_001.png",
+	"frame": {"x":619,"y":2,"w":192,"h":276},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":192,"h":276},
+	"sourceSize": {"w":192,"h":276}
+},
+{
+	"filename": "greyguy_crouch_002.png",
+	"frame": {"x":813,"y":2,"w":192,"h":276},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":192,"h":276},
+	"sourceSize": {"w":192,"h":276}
+},
+{
+	"filename": "greyguy_crouch_003.png",
+	"frame": {"x":2,"y":280,"w":192,"h":276},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":192,"h":276},
+	"sourceSize": {"w":192,"h":276}
+},
+{
+	"filename": "greyguy_crouch_004.png",
+	"frame": {"x":196,"y":280,"w":192,"h":276},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":192,"h":276},
+	"sourceSize": {"w":192,"h":276}
+},
+{
+	"filename": "greyguy_stand_000.png",
+	"frame": {"x":390,"y":280,"w":202,"h":267},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":202,"h":267},
+	"sourceSize": {"w":202,"h":267}
+},
+{
+	"filename": "greyguy_stand_001.png",
+	"frame": {"x":594,"y":280,"w":202,"h":267},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":202,"h":267},
+	"sourceSize": {"w":202,"h":267}
+},
+{
+	"filename": "greyguy_stand_002.png",
+	"frame": {"x":798,"y":280,"w":202,"h":267},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":202,"h":267},
+	"sourceSize": {"w":202,"h":267}
+},
+{
+	"filename": "greyguy_stand_003.png",
+	"frame": {"x":2,"y":558,"w":202,"h":267},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":202,"h":267},
+	"sourceSize": {"w":202,"h":267}
+},
+{
+	"filename": "greyguy_stand_004.png",
+	"frame": {"x":206,"y":558,"w":202,"h":267},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":202,"h":267},
+	"sourceSize": {"w":202,"h":267}
+}],
+"meta": {
+	"app": "http://www.texturepacker.com",
+	"version": "1.0",
+	"image": "greyguy.png",
+	"format": "RGBA8888",
+	"size": {"w":1024,"h":1024},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:4fdbdad0fcd2b407e1a50e873225b769$"
+}
+}
