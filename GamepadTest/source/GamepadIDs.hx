@@ -1,12 +1,13 @@
 package ;
 
-import flixel.input.gamepad.XboxButtonID;
-import flixel.input.gamepad.OUYAButtonID;
+//import flixel.input.gamepad.XboxButtonID;
+//import flixel.input.gamepad.OUYAButtonID;
 
 /**
  * NOTE: This should probably be inside FlxGamepad.
  * @author crazysam
  */
+/*
 class GamepadIDs
 {
 	public static inline var A = #if (OUYA) OUYAButtonID.O #else XboxButtonID.A #end;
@@ -26,3 +27,4 @@ class GamepadIDs
 	public static inline var LEFT_TRIGGER = #if (OUYA) OUYAButtonID.LEFT_TRIGGER #else XboxButtonID.LEFT_TRIGGER #end;
 	public static inline var RIGHT_TRIGGER = #if (OUYA) OUYAButtonID.RIGHT_TRIGGER #else XboxButtonID.RIGHT_TRIGGER #end;
 }
+*/

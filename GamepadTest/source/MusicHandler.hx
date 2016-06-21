@@ -32,8 +32,10 @@ class MusicHandler
 		//_music = FlxG.sound.load("assets/sounds/classic.ogg", 1, true, false, true);
 		_music = FlxG.sound.load("assets/sounds/gamebeat.ogg", 1, true, false, true);
 		//_music = FlxG.sound.load("assets/sounds/racing.ogg", 1, true, false, true);
+		//_music = FlxG.sound.load("assets/sounds/ballroomcoy.ogg", 1, true, false, true);
+		//_music = FlxG.sound.load("assets/sounds/smooth.ogg", 1, true, false, true);
 		_musicBPM = 140;
-		_musicLength = _music._sound.length;
+		_musicLength = _music.getLength();
 		trace("Length: " + _musicLength);
 		_beatSubdivisions = 4.0;
 		_beatInterval = (60 / _musicBPM) * 1000;

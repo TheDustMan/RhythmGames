@@ -1,6 +1,7 @@
 package;
 
 import flixel.input.gamepad.FlxGamepad;
+import flixel.input.gamepad.FlxGamepadInputID;
 import flixel.FlxG;
 /**
  * ...
@@ -35,9 +36,9 @@ class InputHandler
 		}
 		
 		#if !FLX_NO_DEBUG
-		FlxG.watch.addQuick("pressed ID", _gamePad.firstPressedButtonID());
-		FlxG.watch.addQuick("released ID", _gamePad.firstJustReleasedButtonID());
-		FlxG.watch.addQuick("justPressed ID", _gamePad.firstJustPressedButtonID());
+		FlxG.watch.addQuick("pressed ID", _gamePad.firstPressedID());
+		FlxG.watch.addQuick("released ID", _gamePad.firstPressedID());
+		FlxG.watch.addQuick("justPressed ID", _gamePad.firstPressedID());
 		FlxG.watch.addQuick("HAT", _gamePad.hat);
 		
 		FlxG.watch.addQuick("axiz0x", _gamePad.getXAxis(0));
@@ -58,62 +59,56 @@ class InputHandler
 		
 		for (controllable in _controllableEntities) {
 			if (controllable.isActivelyControllable) {
-				if (_gamePad.justPressed(GamepadIDs.A)) {
-					controllable.onJustPressedA();
-				}
-				if (_gamePad.justReleased(GamepadIDs.A)) {
-					controllable.onJustReleasedA();
-				}
-				if (_gamePad.pressed(GamepadIDs.A)) {
+				if (_gamePad.pressed.A) {
 					controllable.onPressA();
 				} else {
 					controllable.onReleaseA();
 				}
-				if (_gamePad.pressed(GamepadIDs.B)) {
+				if (_gamePad.pressed.B) {
 					controllable.onPressB();
 				} else {
 					controllable.onReleaseB();
 				}
-				if (_gamePad.pressed(GamepadIDs.X)) {
+				if (_gamePad.pressed.X) {
 					controllable.onPressX();
 				} else {
 					controllable.onReleaseX();
 				}
-				if (_gamePad.pressed(GamepadIDs.Y)) {
+				if (_gamePad.pressed.Y) {
 					controllable.onPressY();
 				} else {
 					controllable.onReleaseY();
 				}
-				if (_gamePad.pressed(GamepadIDs.LB)) {
+				if (_gamePad.pressed.LEFT_SHOULDER) {
 					controllable.onPressLB();
 				} else {
 					controllable.onReleaseLB();
 				}
-				if (_gamePad.pressed(GamepadIDs.RB)) {
+				if (_gamePad.pressed.RIGHT_SHOULDER) {
 					controllable.onPressRB();
 				} else {
 					controllable.onReleaseRB();
 				}
 				
-				if (_gamePad.pressed(GamepadIDs.SELECT)) {
+				if (_gamePad.pressed.BACK) {
 					controllable.onPressBack();
 				} else {
 					controllable.onReleaseBack();
 				}
-				if (_gamePad.pressed(GamepadIDs.START)) {
+				if (_gamePad.pressed.START) {
 					controllable.onPressStart();
 				} else {
 					controllable.onReleaseStart();
 				}
+				/*
+				controllable.onLeftTrigger(_gamePad.getAxis(FlxGamepadInputID.LEFT_TRIGGER));
+				controllable.onRightTrigger(_gamePad.getAxis(FlxGamepadInputID.RIGHT_TRIGGER));
 				
-				controllable.onLeftTrigger(_gamePad.getAxis(GamepadIDs.LEFT_TRIGGER));
-				controllable.onRightTrigger(_gamePad.getAxis(GamepadIDs.RIGHT_TRIGGER));
+				controllable.onLeftAnalogue(_gamePad.getXAxis(FlxGamepadInputID.LEFT_ANALOGUE_X), _gamePad.getYAxis(FlxGamepadInputID.LEFT_ANALOGUE_Y));
+				controllable.onRightAnalogue(_gamePad.getXAxis(FlxGamepadInputID.RIGHT_ANALOGUE_X), _gamePad.getYAxis(FlxGamepadInputID.RIGHT_ANALOGUE_Y));
 				
-				controllable.onLeftAnalogue(_gamePad.getXAxis(GamepadIDs.LEFT_ANALOGUE_X), _gamePad.getYAxis(GamepadIDs.LEFT_ANALOGUE_Y));
-				controllable.onRightAnalogue(_gamePad.getXAxis(GamepadIDs.RIGHT_ANALOGUE_X), _gamePad.getYAxis(GamepadIDs.RIGHT_ANALOGUE_Y));
-				
-				controllable.onDpad(_gamePad.dpadLeft, _gamePad.dpadRight, _gamePad.dpadUp, _gamePad.dpadDown);
-				
+				controllable.onDpad(_gamePad.getXAxis(FlxGamepadInputID.DPAD_LEFT), _gamePad.getXAxis(FlxGamepadInputID.DPAD_RIGHT), _gamePad.getYAxis(FlxGamepadInputID.DPAD_UP), _gamePad.getYAxis(FlxGamepadInputID.DPAD_DOWN));
+				*/
 			}
 		}
 		

@@ -2,7 +2,7 @@ package;
 
 import flixel.FlxSprite;
 import flixel.group.FlxGroup;
-import flixel.util.FlxPoint;
+import flixel.math.FlxPoint;
 import flixel.text.FlxText;
 import Globals;
 
