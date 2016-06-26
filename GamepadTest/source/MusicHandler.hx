@@ -50,23 +50,26 @@ class MusicHandler
 		_currentSongId = 0;
 		_beatSubdivision = QUARTER;
 		
-		var song1:FlxSound = FlxG.sound.load("assets/sounds/classic.ogg", 1, true);
-		var song2:FlxSound = FlxG.sound.load("assets/sounds/gamebeat.ogg", 1, true);
+		var song1:FlxSound = FlxG.sound.load("assets/sounds/weird_circus.mp3", 1, true);
+		var song2:FlxSound = FlxG.sound.load("assets/sounds/classic.ogg", 1, true);
 		var song3:FlxSound = FlxG.sound.load("assets/sounds/racing.ogg", 1, true);
 		var song4:FlxSound = FlxG.sound.load("assets/sounds/ballroomcoy.ogg", 1, true);
-		var song5:FlxSound = FlxG.sound.load("assets/sounds/smooth.ogg", 1, true);
+		var song5:FlxSound = FlxG.sound.load("assets/sounds/gamebeat.ogg", 1, true);
+		var song6:FlxSound = FlxG.sound.load("assets/sounds/smooth.ogg", 1, true);
 		
-		_songs.set("classic", { song:song1, bpm:140, path:"assets/sounds/classic.ogg" } );
-		_songs.set("gamebeat", { song:song2, bpm:140, path:"assets/sounds/gamebeat.ogg" } );
+		_songs.set("weird_circus", { song:song1, bpm:120, path:"assets/sounds/weird_circus.mp3" } );
+		_songs.set("classic", { song:song2, bpm:140, path:"assets/sounds/classic.ogg" } );
 		_songs.set("racing", { song:song3, bpm:200, path:"assets/sounds/racing.ogg" } );
 		_songs.set("ballroomcoy", { song:song4, bpm:100, path:"assets/sounds/ballroomcoy.ogg" } );
-		_songs.set("smooth", { song:song5, bpm:100, path:"assets/sounds/smooth.ogg" } );
+		_songs.set("gamebeat", { song:song5, bpm:140, path:"assets/sounds/gamebeat.ogg" } );
+		_songs.set("smooth", { song:song6, bpm:100, path:"assets/sounds/smooth.ogg" } );
 		
-		_songIdMap.set(1, "classic");
-		_songIdMap.set(2, "gamebeat");
+		_songIdMap.set(1, "weird_circus");
+		_songIdMap.set(2, "classic");
 		_songIdMap.set(3, "racing");
 		_songIdMap.set(4, "ballroomcoy");
-		_songIdMap.set(5, "smooth" );
+		_songIdMap.set(5, "gamebeat");
+		_songIdMap.set(6, "smooth" );
 		// racing
 		//_musicBPM = 200;
 		// classic and gamebeat
