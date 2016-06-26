@@ -20,7 +20,6 @@ class GreyGuyEntity extends ControllableEntity implements IBeatCapable
 	private var _greyGuy:FlxSprite;
 	private var _spriteAnimationMap:Map<Int, String>;
 	private var _currentAnimation:Int;
-	private var _beatDone:Bool;
 	
 	public function new(activelyControllable:Bool=false) 
 	{
@@ -48,26 +47,21 @@ class GreyGuyEntity extends ControllableEntity implements IBeatCapable
 		_spriteAnimationMap.set(2, "crouch");
 		_spriteAnimationMap.set(3, "stand");
 		_currentAnimation = 1;
-		_beatDone = false;
 	}
 	
 	/* INTERFACE IBeatCapable */
 	
 	public function onBeat():Void 
 	{
-		if (!_beatDone) {
-			_beatDone = true;
-			++_currentAnimation;
-			if (_currentAnimation > 3) {
-				_currentAnimation = 1;
-			}
-			_greyGuy.animation.play(_spriteAnimationMap[_currentAnimation], false);
+		++_currentAnimation;
+		if (_currentAnimation > 3) {
+			_currentAnimation = 1;
 		}
+		_greyGuy.animation.play(_spriteAnimationMap[_currentAnimation], false);
 	}
 	
 	public function offBeat():Void 
 	{
-		_beatDone = false;
 	}
 	
 	public function onEnterBeatAcceptanceWindow():Void 

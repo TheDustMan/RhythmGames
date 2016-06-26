@@ -1,5 +1,6 @@
 package;
 
+import IControllable;
 import flixel.input.gamepad.FlxGamepad;
 import flixel.input.gamepad.FlxGamepadInputID;
 import flixel.FlxG;

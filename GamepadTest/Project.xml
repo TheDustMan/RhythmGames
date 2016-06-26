@@ -43,7 +43,8 @@
 	
 	<!--In case you want to use nape with flixel-->
 	<haxelib name="nape" />
-	
+
+        <haxelib name="polygonal-ds" />
 	<!--------------------------------HAXEDEFINES----------------------------------->
 	
 	<!--Enable the Flixel core recording system-->

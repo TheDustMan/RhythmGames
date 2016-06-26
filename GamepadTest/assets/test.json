@@ -1,0 +1,28 @@
+{"frames": [
+
+{
+	"filename": "greyguy_anims_Player_crouch_down.png",
+	"frame": {"x":2,"y":1014,"w":180,"h":804},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":6,"y":4,"w":180,"h":804},
+	"sourceSize": {"w":192,"h":810}
+},
+{
+	"filename": "greyguy_anims_Player_stand_up.png",
+	"frame": {"x":2,"y":2,"w":188,"h":1010},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":6,"y":52,"w":188,"h":1010},
+	"sourceSize": {"w":202,"h":1068}
+}],
+"meta": {
+	"app": "http://www.texturepacker.com",
+	"version": "1.0",
+	"image": "test.png",
+	"format": "RGBA8888",
+	"size": {"w":512,"h":2048},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:73c4625536a9118e830ef637c82242f9$"
+}
+}

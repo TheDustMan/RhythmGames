@@ -1,15 +1,17 @@
 package;
+import flixel.FlxSprite;
 
 /**
  * ...
  * @author DustMan
  */
-class ControllableEntity implements IControllable
+class ControllableEntity extends FlxSprite implements IControllable
 {
 	public var isActivelyControllable(default, default):Bool;
 	
-	public function new(activelyControllable:Bool = false) 
+	public function new(X:Float = 0, Y:Float = 0, activelyControllable:Bool = false) 
 	{
+		super(X, Y);
 		isActivelyControllable = activelyControllable;
 	}
 	

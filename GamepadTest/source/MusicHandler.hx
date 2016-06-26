@@ -1,5 +1,6 @@
 package;
 
+import IBeatCapable;
 import flixel.FlxG;
 import flixel.system.FlxSound;
 /**
@@ -15,6 +16,13 @@ typedef SongData =
 
 class MusicHandler
 {
+	// Constants
+	private static inline var SIXTEENTH:Float = 4.0;
+	private static inline var TRIPLET_QUARTER:Float = 3.0;
+	private static inline var EIGHTH:Float = 2.0;
+	private static inline var TRIPLET_EIGHTH:Float = 1.5;
+	private static inline var QUARTER:Float = 1.0;
+	
 	private var _beatCapableObjects:Array<IBeatCapable>;
 	private var _songs:Map<String, SongData>;
 	private var _songIdMap:Map<Int, String>;
@@ -27,8 +35,9 @@ class MusicHandler
 	private var _beatDelta:Float;
 	private var _beatAcceptance:Float;
 	private var _beatInterval:Float;
-	private var _beatSubdivisions:Float;
+	private var _beatSubdivision:Float;
 	private var _beatCounter:Int = 1;
+	private var _beatDone:Bool = false;
 	
 	private var _enteredBeatAcceptanceWindow:Bool = false;
 	private var _exitedBeatAcceptanceWindow:Bool = false;
@@ -39,6 +48,7 @@ class MusicHandler
 		_songs = new Map<String, SongData>();
 		_songIdMap = new Map<Int, String>();
 		_currentSongId = 0;
+		_beatSubdivision = QUARTER;
 		
 		var song1:FlxSound = FlxG.sound.load("assets/sounds/classic.ogg", 1, true);
 		var song2:FlxSound = FlxG.sound.load("assets/sounds/gamebeat.ogg", 1, true);
@@ -65,6 +75,11 @@ class MusicHandler
 
 	}
 	
+	private function setBeatSubdivision(subdivision:Float):Void
+	{
+		_beatSubdivision = subdivision;
+	}
+	
 	private function setupAndPlaySong(songName:String):Void
 	{
 		var sd:SongData = _songs[songName];
@@ -72,11 +87,30 @@ class MusicHandler
 		_musicBPM = sd.bpm;
 		_musicLength = sd.song.getLength();
 		trace("Length: " + _musicLength);
-		_beatSubdivisions = 4.0;
+
+		// Determines how the beat is subdivided. See 'Subdivision' enum above.
+		_beatSubdivision = QUARTER;
+
+		// The beat interval is the number of milliseconds that pass between beats in a song. Multiply by 1000 because the sound API can provide
+		// us the time a song has been playing in milliseconds. Using the ol' chemistry conversion techniques:
+		// (x beats / 1 minute) * (1 minute / 60 seconds) = ((x/60) beats / second) = (1 second / (x/60) beats) = (60 seconds / x beats)
+		//
+		// So the time interval (in seconds) between beats is the amount of seconds in a minute divided by the number of beats per minute,
+		// which makes sense since 60 bpm means 1 second betwen beats, 120 bpm is .5 seconds between beats. Multiply by 1000 to get the milliseconds.
 		_beatInterval = (60 / _musicBPM) * 1000;
-		_beatDelta = _beatInterval / 10;
+
+		// The beat delta is the window of time that we can consider "on" the beat. In theory it should be just a single moment in time,
+		// but in reality it has to be lenient due to possible fluctuations in the framerate. If the framerate dropped too low, and the "on beat"
+		// was just a single moment per beat, then we would most likely drop beats.
+		_beatDelta = 75;//; _beatInterval / 10;
+
+		// The beat acceptance is the windows of time we allow for action to be "on" the beat. To be used for evaluating user input.
 		_beatAcceptance = (_beatDelta * 5);
+
+		// The beat delay is an offset to the actual beat, to take into account lagtime due to external factors. Should make this variable rather
+		// that hardcoded
 		_beatDelay = 28.0;
+
 		trace(_beatInterval);
 		_songs[songName].song.play();
 	}
@@ -115,13 +149,21 @@ class MusicHandler
 			return;
 		}
 		var song:FlxSound = _songs[_songIdMap[_currentSongId]].song;
-		var currentBeatTimingValue:Float = (song.time + _beatDelay) % (_beatInterval);
+		
+		// The 'time' property gives us the position we're at within a song in milliseconds.
+		// Use the interval we calculated initially to determine if we're on the beat or not.
+		var currentBeatTimingValue:Float = (song.time) % (_beatInterval / _beatSubdivision);
 		// For updating graphics to the beat
 		if (currentBeatTimingValue < _beatDelta) {
-			for (object in _beatCapableObjects) {
-				object.onBeat();
+			// Ensure that the callback is execute only once per beat
+			if (!_beatDone) {
+				_beatDone = true;
+				for (object in _beatCapableObjects) {
+					object.onBeat();
+				}
 			}
 		} else {
+			_beatDone = false;
 			for (object in _beatCapableObjects) {
 				object.offBeat();
 			}

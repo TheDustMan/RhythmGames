@@ -1,5 +1,6 @@
 package;
 
+import de.polygonal.ds.ArrayedQueue;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxState;
@@ -20,13 +21,18 @@ class PlayState extends FlxState
 	private var _controllableChar:FlxSprite;
 	private var _inputHandler:InputHandler;
 	private var _xboxController:XBoxControllerEntity;
-	private var _greyGuyEntity:GreyGuyEntity;
+	private var _greyGuyActor:GreyGuyActor;
+	private var _greyGuyActor2:GreyGuyActor;
 	private var _musicHandler:MusicHandler;
+	private var _beatScheduler:BeatScheduler;
 	
 	private var napeObjects:Array<FlxNapeSprite>;
 	
+	private var _traceActionCounter:Int = 0;
+	
 	override public function create():Void 
 	{
+		_beatScheduler = new BeatScheduler();
 		_inputHandler = new InputHandler();
 		_controllableChar = new FlxSprite(0, 0, new BitmapData(10, 10, false, 0x000000));
 		
@@ -40,15 +46,39 @@ class PlayState extends FlxState
 		_musicHandler = new MusicHandler();
 		_musicHandler.addBeatCapableObject(_xboxController);
 
-		_greyGuyEntity = new GreyGuyEntity(true);
-		add(_greyGuyEntity.spriteGroup);
-		_inputHandler.addControllableEntity("greyguy", _greyGuyEntity);
-		_musicHandler.addBeatCapableObject(_greyGuyEntity);
+		_greyGuyActor = new GreyGuyActor(0, 0, true);
+		_greyGuyActor2 = new GreyGuyActor(200, 0, true);
+		add(_greyGuyActor);
+		add(_greyGuyActor2);
+		_inputHandler.addControllableEntity("greyguy", _greyGuyActor);
+		_musicHandler.addBeatCapableObject(_greyGuyActor);
+		_musicHandler.addBeatCapableObject(_greyGuyActor2);
+		_musicHandler.addBeatCapableObject(_beatScheduler);
 		
 		// Nape Setup
 		FlxNapeSpace.init();
 		FlxNapeSpace.createWalls(0.0, 0.0, FlxG.width, FlxG.height);
 		createBricks();
+		//testPolygonal();
+	}
+	
+	private function testPolygonal():Void
+	{
+		var arrayQ = new ArrayedQueue<Action>();
+		trace("Enqueue one element");
+		arrayQ.enqueue(new Action(0));
+		trace("Size is now: " + arrayQ.size);
+		
+		trace("Queue with initial capacity of 10");
+		var arrayQ2 = new ArrayedQueue<Action>(10);
+		trace("queue2 has size of " + arrayQ2.size);
+		arrayQ2.enqueue(null);
+		trace("after enqueueing null size is now: " + arrayQ2.size);
+		arrayQ2.set(2, null);
+		trace("after enqueueing null at index 2, size is now" + arrayQ2.size);
+		var action = arrayQ2.dequeue();
+		trace("Action is " + action);
+		trace("After dequeue, size is now " + arrayQ2.size);
 	}
 	
 	private function createBricks() 
@@ -82,10 +112,28 @@ class PlayState extends FlxState
 		_inputHandler.functionUpdateWithInput();
 		_musicHandler.update();
 		if (FlxG.mouse.justPressed) {
-			_musicHandler.cycleSong();
 			if (FlxNapeSpace.space.gravity.y == 0) {
 				FlxNapeSpace.space.gravity.setxy(0, 500);
 			}
+			_beatScheduler.addAction(new TraceAction(_traceActionCounter + ": now", 0));
+			_beatScheduler.addAction(new TraceAction(_traceActionCounter + ": offset 1", 1));
+			_beatScheduler.addAction(new TraceAction(_traceActionCounter + ": offset 2", 2));
+			_beatScheduler.addAction(new TraceAction(_traceActionCounter + ": offset 3", 3));
+			_beatScheduler.addAction(new TraceAction(_traceActionCounter + ": offset 4", 4));
+			_beatScheduler.addAction(new TraceAction(_traceActionCounter + ": offset 5", 5));
+			_beatScheduler.addAction(new TraceAction(_traceActionCounter + ": offset 7", 7));
+			_beatScheduler.addAction(new TraceAction(_traceActionCounter + ": offset 10", 10));
+			_beatScheduler.addAction(new TraceAction(_traceActionCounter + ": offset 15", 15));
+			++_traceActionCounter;
+		}
+		if (FlxG.keys.justPressed.RIGHT) {
+			_musicHandler.cycleSong();
+		}
+		if (FlxG.keys.justPressed.UP) {
+			_beatScheduler.addActionGroup(_greyGuyActor.getActionGroupByName("up_down"));
+		}
+		if (FlxG.keys.justPressed.DOWN) {
+			_beatScheduler.addActionGroup(_greyGuyActor2.getActionGroupByName("up_down"));
 		}
 		/*
 		var justReleasedID:Int = _gamePad.firstJustReleasedButtonID();

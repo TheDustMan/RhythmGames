@@ -16,17 +16,20 @@
   <!-- Other classes to be compiled into your SWF -->
   <classpaths>
     <class path="C:\HaxeToolkit\haxe\lib\flixel\4,0,1" />
-    <class path="C:\HaxeToolkit\haxe\lib\openfl\3,4,0" />
-    <class path="C:\HaxeToolkit\haxe\lib\lime\2,7,0" />
+    <class path="C:\HaxeToolkit\haxe\lib\openfl\3,6,1" />
+    <class path="C:\HaxeToolkit\haxe\lib\lime\2,9,1" />
     <class path="C:\HaxeToolkit\haxe\lib\hscript\2,0,7" />
     <class path="C:\HaxeToolkit\haxe\lib\flixel-addons\git" />
     <class path="C:\HaxeToolkit\haxe\lib\nape\2,0,20" />
+    <class path="C:\HaxeToolkit\haxe\lib\polygonal-ds\2,0,0-beta\src" />
+    <class path="C:\HaxeToolkit\haxe\lib\polygonal-printf\1,0,2-beta" />
     <class path="source" />
+    <class path="C:\HaxeToolkit\haxe\lib\openfl\3,6,1\extern" />
     <class path="export\windows\cpp\haxe" />
   </classpaths>
   <!-- Build options -->
   <build>
-    <option directives="flixel=4.0.1&#xA;openfl=3.4.0&#xA;lime=2.7.0&#xA;hscript=2.0.7&#xA;flixel-addons=1.1.0&#xA;nape=2.0.20&#xA;openfl-next&#xA;tools=2.7.0&#xA;no-compilation&#xA;native&#xA;lime-native&#xA;openfl-native&#xA;windows&#xA;desktop&#xA;display" />
+    <option directives="flixel=4.0.1&#xA;openfl=3.6.1&#xA;lime=2.9.1&#xA;hscript=2.0.7&#xA;flixel-addons=2.0.0&#xA;nape=2.0.20&#xA;polygonal-ds=2.0.0-beta&#xA;polygonal-printf=1.0.2-beta&#xA;openfl-next&#xA;tools=2.9.1&#xA;no-compilation&#xA;native&#xA;lime-native&#xA;openfl-native&#xA;windows&#xA;desktop&#xA;display" />
     <option flashStrict="False" />
     <option noInlineOnDebug="False" />
     <option mainClass="ApplicationMain" />
