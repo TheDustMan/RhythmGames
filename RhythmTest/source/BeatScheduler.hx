@@ -11,6 +11,7 @@ class BeatScheduler implements IBeatCapable
 {	
 	/* Begin INTERFACE IBeatCapable */
 	public var beatState(default, null):IBeatState;
+	public var beatData(default, null):BeatData;
 	/* End INTERFACE IBeatCapable */
 	
 	private var _actionQueue:ArrayedQueue<ArrayList<Action>>;
@@ -94,6 +95,11 @@ class BeatScheduler implements IBeatCapable
 	public function onExitBeatAcceptanceWindow():Void 
 	{
 		
+	}
+	
+	public function onBeatDataUpdate(beatData:BeatData):Void
+	{
+		this.beatData = beatData;
 	}
 	
 }

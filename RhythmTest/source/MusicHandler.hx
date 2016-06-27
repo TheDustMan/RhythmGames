@@ -7,7 +7,7 @@ import flixel.system.FlxSound;
  * ...
  * @author DustMan
  */
-typedef SongData =
+typedef MusicData =
 {
 	var song:FlxSound;
 	var bpm:Int;
@@ -23,19 +23,19 @@ class MusicHandler
 	private static inline var TRIPLET_EIGHTH:Float = 1.5;
 	private static inline var QUARTER:Float = 1.0;
 	
-	private var _beatCapableObjects:Array<IBeatCapable>;
-	private var _songs:Map<String, SongData>;
-	private var _songIdMap:Map<Int, String>;
-	private var _currentSongId:Int;
+	private var _beatCapableObjects:Array<IBeatCapable> = null;
+	private var _songs:Map<String, MusicData> = null;
+	private var _songIdMap:Map<Int, String> = null;
+	private var _currentSongId:Int = 0;
 	
-	private var _music:FlxSound;
-	private var _musicBPM:Float;
-	private var _musicLength:Float;
-	private var _beatDelay:Float;
-	private var _beatDelta:Float;
-	private var _beatAcceptance:Float;
-	private var _beatInterval:Float;
-	private var _beatSubdivision:Float;
+	private var _music:FlxSound = null;
+	private var _musicBPM:Float = 0.0;
+	private var _musicLength:Float = 0.0;
+	private var _beatDelay:Float = 0.0;
+	private var _beatDelta:Float = 0.0;
+	private var _beatAcceptance:Float = 0.0;
+	private var _beatInterval:Float = 0.0;
+	private var _beatSubdivision:Float = QUARTER;
 	private var _beatCounter:Int = 1;
 	private var _beatDone:Bool = false;
 	
@@ -45,7 +45,7 @@ class MusicHandler
 	public function new() 
 	{
 		_beatCapableObjects = [];
-		_songs = new Map<String, SongData>();
+		_songs = new Map<String, MusicData>();
 		_songIdMap = new Map<Int, String>();
 		_currentSongId = 0;
 		_beatSubdivision = QUARTER;
@@ -82,7 +82,7 @@ class MusicHandler
 	
 	private function setupAndPlaySong(songName:String):Void
 	{
-		var sd:SongData = _songs[songName];
+		var sd:MusicData = _songs[songName];
 		
 		_musicBPM = sd.bpm;
 		_musicLength = sd.song.getLength();
@@ -112,6 +112,10 @@ class MusicHandler
 		_beatDelay = 28.0;
 
 		trace(_beatInterval);
+		
+		for (object in _beatCapableObjects) {
+			object.onBeatDataUpdate({ beatInterval: _beatInterval });
+		}
 		_songs[songName].song.play();
 	}
 	
@@ -122,8 +126,14 @@ class MusicHandler
 		}
 	}
 	
+	public function getBeatInterval():Float
+	{
+		return _beatInterval;
+	}
+	
 	public function addBeatCapableObject(object:IBeatCapable):Void
 	{
+		object.onBeatDataUpdate({ beatInterval: _beatInterval });
 		_beatCapableObjects.push(object);
 	}
 	

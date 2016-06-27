@@ -17,6 +17,7 @@ class Actor extends ControllableEntity implements IBeatCapable
 	/* Begin INTERFACE IBeatCapable */
 	public var beatState(default, null):IBeatState;
 	private var _beatLock:Bool = false;
+	public var beatData(default, null):BeatData;
 	/* End INTERFACE IBeatCapable */
 	
 	private var _actions:Array<Action>;
@@ -95,11 +96,20 @@ class Actor extends ControllableEntity implements IBeatCapable
 	
 	public function onEnterBeatAcceptanceWindow():Void 
 	{
-		
+		if (_state == WAITING_FOR_INPUT) {
+			trace("entering");
+		}
 	}
 	
 	public function onExitBeatAcceptanceWindow():Void 
 	{
-		
+		if (_state == WAITING_FOR_INPUT) {
+			trace("exiting");
+		}	
+	}
+	
+	public function onBeatDataUpdate(beatData:BeatData):Void
+	{
+		this.beatData = beatData;
 	}
 }

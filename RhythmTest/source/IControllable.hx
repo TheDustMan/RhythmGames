@@ -7,6 +7,11 @@ interface IControllable
 {
 	public var isActivelyControllable:Bool;
 	
+	public function onJustPressedMouseLeft():Void;
+	public function onPressedMouseLeft():Void;
+	public function onReleaseMouseLeft():Void;
+	public function onJustReleasedMouseLeft():Void;
+	
 	public function onPressA():Void;
 	public function onJustPressedA():Void;
 	public function onPressB():Void;

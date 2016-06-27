@@ -4,7 +4,10 @@ import flixel.group.FlxGroup;
 import IBeatCapable;
 import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.graphics.frames.FlxFrame;
+import flixel.tweens.FlxTween;
+import flixel.tweens.FlxEase;
 import Actor;
+import BeatTweenActionManager;
 /**
  * ...
  * @author DustMan
@@ -12,6 +15,7 @@ import Actor;
 class GreyGuyActor extends Actor
 {
 	private var _greyGuy:FlxSprite;
+	private var _inBeatAcceptance:Bool;
 	
 	public function new(X:Float = 0, Y:Float = 0, activelyControllable:Bool=false) 
 	{
@@ -24,6 +28,7 @@ class GreyGuyActor extends Actor
 		this.animation.addByPrefix("bob", "greyguy_bob_", 30, false);
 		this.animation.addByPrefix("crouch", "greyguy_crouch_", 30, false);
 		this.animation.addByPrefix("stand", "greyguy_stand_", 30, false);
+		this.animation.addByPrefix("hit", "greyguy_hit_", 30, false);
 		this.animation.addByIndices("still", "greyguy_bob_", [0], ".png", 30, false);
 		
 		//_greyGuy.loadGraphic("assets/images/greyguy_bob.png", true, 139, 258);
@@ -34,14 +39,17 @@ class GreyGuyActor extends Actor
 		_spriteAnimationMap.set(1, "bob");
 		_spriteAnimationMap.set(2, "crouch");
 		_spriteAnimationMap.set(3, "stand");
+		_spriteAnimationMap.set(4, "hit");
 		_currentAnimation = 1;
 		
 		var actionGroup = new ActionGroup();
 		actionGroup.addAction(new ActorStateTransitionAction(this, ACTING, 0));
 		actionGroup.addAction(new GreyGuyCrouchAction(this, 0));
-		actionGroup.addAction(new GreyGuyStandAction(this, 3));
-		actionGroup.addAction(new ActorStateTransitionAction(this, WAITING_FOR_INPUT, 0));
+		actionGroup.addAction(new GreyGuyStandAction(this, 2));
+		actionGroup.addAction(new GreyGuyHitAction(this, 3));
+		actionGroup.addAction(new ActorStateTransitionAction(this, WAITING_FOR_INPUT, 5));
 		actionGroup.addAction(new GreyGuyCrouchAction(this, 5));
+		actionGroup.addAction(new ActorStateTransitionAction(this, ACTING, 6));
 		actionGroup.addAction(new GreyGuyStandAction(this, 7));
 		actionGroup.addAction(new GreyGuyCrouchAction(this, 8));
 		actionGroup.addAction(new GreyGuyStandAction(this, 10));
@@ -49,8 +57,21 @@ class GreyGuyActor extends Actor
 		actionGroup.addAction(new GreyGuyStandAction(this, 15));
 		actionGroup.addAction(new ActorStateTransitionAction(this, IDLE, 15));
 		this.addActionGroup("up_down", actionGroup);
-	}
 		
+		var actionGroup2 = new ActionGroup();
+		var tweenOptions = { type: FlxTween.ONESHOT, ease: null };
+		var motionData1 = { startX: 0.0, startY: 0.0, endX: 400.0, endY: 50.0 };
+		var motionData2 = { startX: 400.0, startY: 50.0, endX: 50.0, endY: 200.0 };
+		var motionData3 = { startX: 50.0, startY: 200.0, endX: 0.0, endY: 0.0 };
+		actionGroup2.addAction(new ActorStateTransitionAction(this, ACTING, 0));
+		actionGroup2.addAction(new LinearMotionTweenAction(this, tweenOptions, motionData1, 2.0, 0));
+		actionGroup2.addAction(new LinearMotionTweenAction(this, tweenOptions, motionData2, 2.0, 2));
+		actionGroup2.addAction(new ActorStateTransitionAction(this, WAITING_FOR_INPUT, 4));
+		actionGroup2.addAction(new LinearMotionTweenAction(this, tweenOptions, motionData3, 2.0, 4));
+		actionGroup2.addAction(new ActorStateTransitionAction(this, IDLE, 5));
+		this.addActionGroup("tween", actionGroup2);
+		_inBeatAcceptance = false;
+	}
 	/* INTERFACE IBeatCapable */
 	
 	override public function onBeat():Void 
@@ -75,10 +96,22 @@ class GreyGuyActor extends Actor
 	override public function onEnterBeatAcceptanceWindow():Void 
 	{
 		super.onEnterBeatAcceptanceWindow();
+		_inBeatAcceptance = true;
 	}
 	
 	override public function onExitBeatAcceptanceWindow():Void 
 	{
 		super.onExitBeatAcceptanceWindow();
+		_inBeatAcceptance = false;
+	}
+	
+	override public function onJustPressedMouseLeft():Void
+	{
+		if (_state == WAITING_FOR_INPUT && _inBeatAcceptance) {
+			trace("success!");
+		} else {
+			this.playAnimationByName("hit");
+			trace("fail");
+		}
 	}
 }

@@ -11,6 +11,10 @@ import flixel.system.FlxSound;
 import openfl.display.BitmapData;
 import openfl.media.Sound;
 import flixel.text.FlxText;
+import flixel.tweens.FlxEase;
+import flixel.tweens.FlxEase.EaseFunction;
+import flixel.tweens.FlxTween;
+import flixel.tweens.FlxTween.TweenOptions;
 import Globals;
 
 import flixel.addons.nape.FlxNapeSprite;
@@ -25,6 +29,7 @@ class PlayState extends FlxState
 	private var _greyGuyActor2:GreyGuyActor;
 	private var _musicHandler:MusicHandler;
 	private var _beatScheduler:BeatScheduler;
+	private var _beattweenManager:BeatTweenActionManager;
 	
 	private var napeObjects:Array<FlxNapeSprite>;
 	
@@ -32,6 +37,7 @@ class PlayState extends FlxState
 	
 	override public function create():Void 
 	{
+		_beattweenManager = new BeatTweenActionManager();
 		_beatScheduler = new BeatScheduler();
 		_inputHandler = new InputHandler();
 		_controllableChar = new FlxSprite(0, 0, new BitmapData(10, 10, false, 0x000000));
@@ -54,6 +60,10 @@ class PlayState extends FlxState
 		_musicHandler.addBeatCapableObject(_greyGuyActor);
 		_musicHandler.addBeatCapableObject(_greyGuyActor2);
 		_musicHandler.addBeatCapableObject(_beatScheduler);
+		_musicHandler.addBeatCapableObject(_beattweenManager);
+		
+		// Tween testing
+		//var easeInfo:EaseInfo
 		
 		// Nape Setup
 		FlxNapeSpace.init();
@@ -61,7 +71,13 @@ class PlayState extends FlxState
 		createBricks();
 		//testPolygonal();
 	}
-	
+
+	private function myCallback(Tween:FlxTween):Void
+	{
+		trace("onUpdate");
+		Tween.duration = (_musicHandler.getBeatInterval() / 1000.0);
+	}
+
 	private function testPolygonal():Void
 	{
 		var arrayQ = new ArrayedQueue<Action>();
@@ -112,6 +128,7 @@ class PlayState extends FlxState
 		_inputHandler.functionUpdateWithInput();
 		_musicHandler.update();
 		if (FlxG.mouse.justPressed) {
+		
 			if (FlxNapeSpace.space.gravity.y == 0) {
 				FlxNapeSpace.space.gravity.setxy(0, 500);
 			}
@@ -125,6 +142,9 @@ class PlayState extends FlxState
 			_beatScheduler.addAction(new TraceAction(_traceActionCounter + ": offset 10", 10));
 			_beatScheduler.addAction(new TraceAction(_traceActionCounter + ": offset 15", 15));
 			++_traceActionCounter;
+		}
+		if (FlxG.mouse.justPressedRight) {
+			_beatScheduler.addActionGroup(_greyGuyActor.getActionGroupByName("tween"));
 		}
 		if (FlxG.keys.justPressed.RIGHT) {
 			_musicHandler.cycleSong();

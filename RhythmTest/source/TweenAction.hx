@@ -5,19 +5,20 @@ import flixel.tweens.FlxTween;
  * ...
  * @author DustMan
  */
-class TweenAction extends Action
+class TweenAction extends ActorAction
 {
-	private var _tween:FlxTween;
+	private var _tweenOptions:TweenOptions;
+	private var _duration:Float;
 	
-	public function new(actor:Actor, tween:FlxTween) 
+	public function new(actor:Actor, tweenOptions:TweenOptions, duration:Float, beatOffset:Int=0) 
 	{
-		super(actor);
-		_tween = tween;
+		super(actor, beatOffset);
+		_tweenOptions = tweenOptions;
+		_duration = duration;
 	}
 	
 	override public function doAction():Void
 	{
-		var t:FlxTween = new FlxTween({
-		_tween.start();
+		
 	}
 }

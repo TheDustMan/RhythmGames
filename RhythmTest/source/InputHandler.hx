@@ -60,6 +60,12 @@ class InputHandler
 		
 		for (controllable in _controllableEntities) {
 			if (controllable.isActivelyControllable) {
+				if (FlxG.mouse.justPressed) {
+					controllable.onJustPressedMouseLeft();
+				}
+				if (FlxG.mouse.justReleased) {
+					controllable.onJustReleasedMouseLeft();
+				}
 				if (_gamePad.pressed.A) {
 					controllable.onPressA();
 				} else {

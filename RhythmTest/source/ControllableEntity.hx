@@ -15,6 +15,26 @@ class ControllableEntity extends FlxSprite implements IControllable
 		isActivelyControllable = activelyControllable;
 	}
 	
+	public function onJustPressedMouseLeft():Void
+	{
+		
+	}
+	
+	public function onPressedMouseLeft():Void
+	{
+		
+	}
+	
+	public function onReleaseMouseLeft():Void
+	{
+		
+	}
+	
+	public function onJustReleasedMouseLeft():Void
+	{
+		
+	}
+	
 	public function onPressA():Void
 	{
 		
