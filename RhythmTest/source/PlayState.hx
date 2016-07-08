@@ -20,6 +20,8 @@ import Globals;
 import flixel.addons.nape.FlxNapeSprite;
 import flixel.addons.nape.FlxNapeSpace;
 
+import IMusicUpdateable;
+
 class PlayState extends FlxState
 {
 	private var _controllableChar:FlxSprite;
@@ -27,9 +29,11 @@ class PlayState extends FlxState
 	private var _xboxController:XBoxControllerEntity;
 	private var _greyGuyActor:GreyGuyActor;
 	private var _greyGuyActor2:GreyGuyActor;
+	private var _beatboxActor:BeatBoxActor;
 	private var _musicHandler:MusicHandler;
 	private var _beatScheduler:BeatScheduler;
 	private var _beattweenManager:BeatTweenActionManager;
+	private var _rhythmTimerManager:RhythmTimerManager;
 	
 	private var napeObjects:Array<FlxNapeSprite>;
 	
@@ -40,6 +44,7 @@ class PlayState extends FlxState
 		_beattweenManager = new BeatTweenActionManager();
 		_beatScheduler = new BeatScheduler();
 		_inputHandler = new InputHandler();
+		_rhythmTimerManager = new RhythmTimerManager();
 		_controllableChar = new FlxSprite(0, 0, new BitmapData(10, 10, false, 0x000000));
 		
 		
@@ -54,13 +59,23 @@ class PlayState extends FlxState
 
 		_greyGuyActor = new GreyGuyActor(0, 0, true);
 		_greyGuyActor2 = new GreyGuyActor(200, 0, true);
+		_beatboxActor = new BeatBoxActor(200, 200, true);
 		add(_greyGuyActor);
 		add(_greyGuyActor2);
+		add(_beatboxActor);
 		_inputHandler.addControllableEntity("greyguy", _greyGuyActor);
+		_inputHandler.addControllableEntity("timermanager", _rhythmTimerManager);
 		_musicHandler.addBeatCapableObject(_greyGuyActor);
 		_musicHandler.addBeatCapableObject(_greyGuyActor2);
 		_musicHandler.addBeatCapableObject(_beatScheduler);
 		_musicHandler.addBeatCapableObject(_beattweenManager);
+		_musicHandler.addBeatCapableObject(_beatboxActor);
+		_musicHandler.addMusicUpdateableObject(_rhythmTimerManager);
+		_musicHandler.addBeatUpdateableObject(_rhythmTimerManager);
+		_musicHandler.addBeatUpdateableObject(_greyGuyActor);
+		_musicHandler.addBeatUpdateableObject(_greyGuyActor2);
+		_musicHandler.addBeatUpdateableObject(_beatScheduler);
+		_musicHandler.addBeatUpdateableObject(_beattweenManager);
 		
 		// Tween testing
 		//var easeInfo:EaseInfo
@@ -126,7 +141,7 @@ class PlayState extends FlxState
 		super.update(elapsed);
 		
 		_inputHandler.functionUpdateWithInput();
-		_musicHandler.update();
+		_musicHandler.update(elapsed);
 		if (FlxG.mouse.justPressed) {
 		
 			if (FlxNapeSpace.space.gravity.y == 0) {
@@ -146,6 +161,9 @@ class PlayState extends FlxState
 		if (FlxG.mouse.justPressedRight) {
 			_beatScheduler.addActionGroup(_greyGuyActor.getActionGroupByName("tween"));
 		}
+		if (FlxG.keys.justPressed.LEFT) {
+			_beatScheduler.addActionGroup(_greyGuyActor.getActionGroupByName("eight"));
+		}
 		if (FlxG.keys.justPressed.RIGHT) {
 			_musicHandler.cycleSong();
 		}
@@ -154,6 +172,10 @@ class PlayState extends FlxState
 		}
 		if (FlxG.keys.justPressed.DOWN) {
 			_beatScheduler.addActionGroup(_greyGuyActor2.getActionGroupByName("up_down"));
+		}
+		if (FlxG.keys.justPressed.S) {
+			var rhythmInputAction = new RhythmInputAction(_rhythmTimerManager.createTimer(), 0);
+			_beatScheduler.addAction(rhythmInputAction);
 		}
 		/*
 		var justReleasedID:Int = _gamePad.firstJustReleasedButtonID();

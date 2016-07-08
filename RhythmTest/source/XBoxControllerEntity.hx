@@ -17,7 +17,6 @@ class XBoxControllerEntity extends ControllableEntity implements IBeatCapable
 {
 	public var beatState:IBeatState = OUT_WINDOW;
 	private var _beatLock:Bool = false;
-	public var beatData(default, null):BeatData;
 	
 	public var spriteGroup(default, null):FlxGroup;
 
@@ -137,11 +136,6 @@ class XBoxControllerEntity extends ControllableEntity implements IBeatCapable
 	public function offBeat():Void
 	{
 		_controllerBg.y = 0.0;
-	}
-	
-	public function onBeatDataUpdate(beatData:BeatData):Void
-	{
-		this.beatData = beatData;
 	}
 	
 	override public function onPressA():Void

@@ -3,11 +3,12 @@ package;
 import de.polygonal.ds.ArrayedQueue;
 import de.polygonal.ds.ArrayList;
 import IBeatCapable;
+import IBeatUpdateable;
 /**
  * ...
  * @author DustMan
  */
-class BeatScheduler implements IBeatCapable
+class BeatScheduler implements IBeatCapable implements IBeatUpdateable
 {	
 	/* Begin INTERFACE IBeatCapable */
 	public var beatState(default, null):IBeatState;
@@ -66,7 +67,6 @@ class BeatScheduler implements IBeatCapable
 	
 	/* INTERFACE IBeatCapable */
 	
-	
 	public var _beatLock:Bool;
 	
 	public function onBeat():Void 
@@ -97,7 +97,8 @@ class BeatScheduler implements IBeatCapable
 		
 	}
 	
-	public function onBeatDataUpdate(beatData:BeatData):Void
+	/* INTERFACE IBeatUpdateable */
+	public function onBeatUpdate(beatData:BeatData):Void
 	{
 		this.beatData = beatData;
 	}

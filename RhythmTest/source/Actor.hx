@@ -1,5 +1,7 @@
 package;
 import IBeatCapable;
+import IBeatUpdateable;
+import flixel.util.FlxTimer;
 
 /**
  * ...
@@ -11,14 +13,24 @@ enum ActorState
 	ACTING;
 	WAITING_FOR_INPUT;
 }
+
+typedef TimerInputData =
+{
+	var duration:Float;
+	var timeCounter:Float;
+	var inputCounter:Int;
+	var inputTiming:Array<Float>;
+}
 	
-class Actor extends ControllableEntity implements IBeatCapable
+class Actor extends ControllableEntity implements IBeatCapable implements IBeatUpdateable implements ITimeable
 {
 	/* Begin INTERFACE IBeatCapable */
 	public var beatState(default, null):IBeatState;
 	private var _beatLock:Bool = false;
-	public var beatData(default, null):BeatData;
 	/* End INTERFACE IBeatCapable */
+	/* Begin INTERFACE IBeatUpdateable */
+	public var beatData(default, null):BeatData;
+	/* End INTERFACE IBeatUpdateable */
 	
 	private var _actions:Array<Action>;
 	private var _actionGroupMap:Map< String, ActionGroup >;
@@ -29,6 +41,7 @@ class Actor extends ControllableEntity implements IBeatCapable
 	private var _currentAnimation:Int;
 	
 	private var _state:ActorState = IDLE;
+	private var _beatTimers:Map<String, TimerInputData>;
 	
 	public function new(X:Float = 0, Y:Float = 0, activelyControllable:Bool=false) 
 	{
@@ -38,6 +51,7 @@ class Actor extends ControllableEntity implements IBeatCapable
 		_actionGroupIterators = new Array<ActionGroupIterator>();
 		
 		_spriteAnimationMap = new Map<Int, String>();
+		_beatTimers = new Map<String, TimerInputData>();
 	}
 	
 	public function setState(state:ActorState)
@@ -108,8 +122,17 @@ class Actor extends ControllableEntity implements IBeatCapable
 		}	
 	}
 	
-	public function onBeatDataUpdate(beatData:BeatData):Void
+	/* INTERFACE IBeatUpdateable */
+	
+	public function onBeatUpdate(beatData:BeatData):Void
 	{
 		this.beatData = beatData;
+	}
+	
+	/* INTERFACE ITimeable */
+	public function onTimer(timer:FlxTimer):Void
+	{
+		trace("timed action!");
+		this.playAnimationByName("crouch");
 	}
 }

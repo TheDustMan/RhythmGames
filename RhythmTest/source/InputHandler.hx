@@ -66,6 +66,9 @@ class InputHandler
 				if (FlxG.mouse.justReleased) {
 					controllable.onJustReleasedMouseLeft();
 				}
+				if (FlxG.keys.justPressed.A) {
+					controllable.onJustPressedA();
+				}
 				if (_gamePad.pressed.A) {
 					controllable.onPressA();
 				} else {

@@ -3,11 +3,12 @@ import de.polygonal.ds.ArrayList;
 import flixel.tweens.FlxTween.TweenOptions;
 import LinearMotionTweenAction;
 import IBeatCapable;
+import IBeatUpdateable;
 /**
  * ...
  * @author DustMan
  */
-class BeatTweenActionManager implements IBeatCapable
+class BeatTweenActionManager implements IBeatCapable implements IBeatUpdateable
 {
 	private var _tweenActions:ArrayList<TweenAction>;
 	
@@ -54,7 +55,9 @@ class BeatTweenActionManager implements IBeatCapable
 		
 	}
 	
-	public function onBeatDataUpdate(beatData:BeatData):Void
+	/* INTERFACE IBeatCapable */
+	
+	public function onBeatUpdate(beatData:BeatData):Void
 	{
 		this.beatData = beatData;
 	}

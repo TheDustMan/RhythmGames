@@ -47,7 +47,7 @@ class GreyGuyActor extends Actor
 		actionGroup.addAction(new GreyGuyCrouchAction(this, 0));
 		actionGroup.addAction(new GreyGuyStandAction(this, 2));
 		actionGroup.addAction(new GreyGuyHitAction(this, 3));
-		actionGroup.addAction(new ActorStateTransitionAction(this, WAITING_FOR_INPUT, 5));
+		actionGroup.addAction(new ActorStateTransitionAction(this, WAITING_FOR_INPUT, 4));
 		actionGroup.addAction(new GreyGuyCrouchAction(this, 5));
 		actionGroup.addAction(new ActorStateTransitionAction(this, ACTING, 6));
 		actionGroup.addAction(new GreyGuyStandAction(this, 7));
@@ -70,6 +70,14 @@ class GreyGuyActor extends Actor
 		actionGroup2.addAction(new LinearMotionTweenAction(this, tweenOptions, motionData3, 2.0, 4));
 		actionGroup2.addAction(new ActorStateTransitionAction(this, IDLE, 5));
 		this.addActionGroup("tween", actionGroup2);
+		
+		var actionGroup3 = new ActionGroup();
+		var timerData = { duration: 0.5, loops: 8 };
+		actionGroup3.addAction(new ActorStateTransitionAction(this, ACTING, 0));
+		actionGroup3.addAction(new TimedAction(this, timerData, 0));
+		actionGroup3.addAction(new ActorStateTransitionAction(this, IDLE, 5));
+		this.addActionGroup("eight", actionGroup3);
+		
 		_inBeatAcceptance = false;
 	}
 	/* INTERFACE IBeatCapable */
